@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block body %}
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 fw-normal">Welcome !</h1>
+      <p class="lead fw-normal">
+      
+      <form method="POST" action="{{path('create_task')}}">
+
+        <input type="text" name = "title" id="myInput" placeholder="Task title...">
+        <button type="submit" class="btn btn-success">Add a task</button>
+
+      </form>
+      {% for todo in todos %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a {% if todo.status %} class="font-weight-bold text-warning text-uppercase" {% endif %}>{{todo.name}}</a>
+            </td>
+            <td>
+              <a class="btn btn-warning text-light">
+                    <b>EDIT</b>
+              </a>
+              <a href="{{path('switch_status', {'id':todo.id})}}" class="btn btn-primary text-light">
+                    <b>DONE</b>
+              </a>
+              <a class="btn btn-danger text-light" 
+              onclick="return confirm('Are you sure to delete ?')"
+              href="{{path('todo_delete', {'id':todo.id})}}">
+                    <b>DELETE</b>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {% endfor %}
+
+      </p>
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+</div>
+{% endblock %}
